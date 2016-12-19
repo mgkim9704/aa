@@ -9,6 +9,7 @@ var source;
 var analyser;
 var xhr;
 var started = false;
+var checkfilterload, _startfilter;
 
 $(document).ready(function() {
 
@@ -28,13 +29,18 @@ $(document).ready(function() {
 
 });
 
+function startfilter(){
+	_startfilter=true;
+}
+
 nx.onload = function() {
 
-	// OSC
-	gui_filter_freq.on('*',function(data) {
-		biquad.frequency.value=60+Math.pow(20000,data.x);
-		biquad.Q.value = 10*data.y;
-	});
+	if(_startfilter){
+		gui_filter_freq.on('*',function(data) {
+			biquad.frequency.value=60+Math.pow(20000,data.x);
+			biquad.Q.value = 10*data.y;
+		});
+	}
 
 }
 
@@ -166,10 +172,13 @@ function animate() {
 	//renderer.render(scene, camera);
 //}
 
+//filter reset
 $(window).mouseup(function(){
 	
-	biquad.frequency.value=21000;
-	biquad.Q.value=0;
+	if(checkfilterload){
+		biquad.frequency.value=21000;
+		biquad.Q.value=0;
+	}
 	
 });
 
@@ -237,6 +246,7 @@ function createAudio() {
 
 	biquad= audioContext.createBiquadFilter();
 	biquad.type = "lowpass";
+	checkfilterload=true;
 	
 	source.connect(biquad);
 	biquad.connect(audioContext.destination);
