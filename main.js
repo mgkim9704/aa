@@ -90,7 +90,7 @@ function loadSampleAudio() {
 	source.connect(analyser);
 	analyser.connect(audioContext.destination);
 
-	loadAudioBuffer("16.08.13.mp3");
+	loadAudioBuffer("demo.mp3");
 }
 
 function loadAudioBuffer(url) {
