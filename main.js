@@ -41,35 +41,35 @@ nx.onload = function() {
 function init() {
 
 	//init 3D scene
-	container = document.createElement('div');
-	document.body.appendChild(container);
-	camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000000);
-	camera.position.z = 2000;
-	scene = new THREE.Scene();
-	scene.add(camera);
-	renderer = new THREE.WebGLRenderer({
-		antialias : false,
-		sortObjects : false
-	});
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	//container = document.createElement('div');
+	//document.body.appendChild(container);
+	//camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000000);
+	//camera.position.z = 2000;
+	//scene = new THREE.Scene();
+	//scene.add(camera);
+	//renderer = new THREE.WebGLRenderer({
+	//	antialias : false,
+	//	sortObjects : false
+	//});
+	//renderer.setSize(window.innerWidth, window.innerHeight);
 
-	container.appendChild(renderer.domElement);
+	//container.appendChild(renderer.domElement);
 
 	// stop the user getting a text cursor
-	document.onselectStart = function() {
-		return false;
-	};
+	//document.onselectStart = function() {
+	//	return false;
+	//};
 
 	//add stats
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.top = '0px';
-	container.appendChild(stats.domElement);
+	//stats = new Stats();
+	//stats.domElement.style.position = 'absolute';
+	//stats.domElement.style.top = '0px';
+	//container.appendChild(stats.domElement);
 
 	//init listeners
 	$("#loadSample").click( loadSampleAudio);
 	$(document).mousemove(onDocumentMouseMove);
-	$(window).resize(onWindowResize);
+	//$(window).resize(onWindowResize);
 	document.addEventListener('drop', onDocumentDrop, false);
 	document.addEventListener('dragover', onDocumentDragOver, false);
 
@@ -143,38 +143,40 @@ function onDocumentMouseMove(event) {
 function onWindowResize(event) {
 	windowHalfX = window.innerWidth / 2;
 	windowHalfY = window.innerHeight / 2;
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	//camera.aspect = window.innerWidth / window.innerHeight;
+	//camera.updateProjectionMatrix();
+	//renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 function animate() {
 	requestAnimationFrame(animate);
-	render();
-	stats.update();
+	//render();
+	//stats.update();
 }
 
-function render() {
-	LoopVisualizer.update();
+//function render() {
+	//LoopVisualizer.update();
 
-	var xrot = mouseX/window.innerWidth * Math.PI*2 + Math.PI;
-	var yrot = mouseY/window.innerHeight* Math.PI*2 + Math.PI;
+	//var xrot = mouseX/window.innerWidth * Math.PI*2 + Math.PI;
+	//var yrot = mouseY/window.innerHeight* Math.PI*2 + Math.PI;
 
-	LoopVisualizer.loopHolder.rotation.x += (-yrot - LoopVisualizer.loopHolder.rotation.x) * 0.3;
-	LoopVisualizer.loopHolder.rotation.y += (xrot - LoopVisualizer.loopHolder.rotation.y) * 0.3;
+	//LoopVisualizer.loopHolder.rotation.x += (-yrot - LoopVisualizer.loopHolder.rotation.x) * 0.3;
+	//LoopVisualizer.loopHolder.rotation.y += (xrot - LoopVisualizer.loopHolder.rotation.y) * 0.3;
 
-	renderer.render(scene, camera);
-}
+	//renderer.render(scene, camera);
+//}
 
 $(window).mouseup(function(){
+	
 	biquad.frequency.value=21000;
 	biguad.Q.value=0;
+	
 });
 
-$(window).mousewheel(function(event, delta) {
+//$(window).mousewheel(function(event, delta) {
 	//set camera Z
-	camera.position.z -= delta * 50;
-});
+	//camera.position.z -= delta * 50;
+//});
 
 function onDocumentDragOver(evt) {
 
@@ -190,8 +192,8 @@ function onDocumentDrop(evt) {
 	evt.preventDefault();
 
 	//clean up previous mp3
-	if (source) source.disconnect();
-	LoopVisualizer.remove();
+	//if (source) source.disconnect();
+	//LoopVisualizer.remove();
 
 	$('#loading').show();
 	$('#loading').text("loading...");
@@ -249,11 +251,11 @@ function startViz(){
 
 	$('#loading').hide();
 
-	LoopVisualizer.init();
+	//LoopVisualizer.init();
 
-	if (!started){
-		started = true;
-		animate();
-	}
+	//if (!started){
+		//started = true;
+		//animate();
+	//}
 
 }
