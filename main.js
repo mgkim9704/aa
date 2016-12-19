@@ -9,7 +9,7 @@ var source;
 var analyser;
 var xhr;
 var started = false;
-var checkfilterload, _startfilter;
+var checkfilterload;
 
 $(document).ready(function() {
 
@@ -29,18 +29,13 @@ $(document).ready(function() {
 
 });
 
-function startfilter(){
-	_startfilter=true;
-}
-
 nx.onload = function() {
 
-	if(_startfilter){
-		gui_filter_freq.on('*',function(data) {
-			biquad.frequency.value=60+Math.pow(20000,data.x);
-			biquad.Q.value = 10*data.y;
-		});
-	}
+
+	gui_filter_freq.on('*',function(data) {
+		biquad.frequency.value=60+Math.pow(20000,data.x);
+		biquad.Q.value = 10*data.y;
+	});
 
 }
 
