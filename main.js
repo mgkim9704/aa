@@ -169,7 +169,7 @@ function animate() {
 $(window).mouseup(function(){
 	
 	biquad.frequency.value=21000;
-	biguad.Q.value=0;
+	biquad.Q.value=0;
 	
 });
 
