@@ -9,7 +9,7 @@ var source;
 var analyser;
 var xhr;
 var started = false;
-var checkfilterload;
+var checkfilterload = false;
 
 $(document).ready(function() {
 
@@ -86,10 +86,15 @@ function loadSampleAudio() {
 	analyser = audioContext.createAnalyser();
 	analyser.smoothingTimeConstant = 0.1;
 	analyser.fftSize = 1024;
+	
+	biquad= audioContext.createBiquadFilter();
+	biquad.type = "lowpass";
+	checkfilterload=true;
 
 	// Connect audio processing graph
+	source.connect(biquad);
+	biquad.connect(audioContext.destination);
 	source.connect(analyser);
-	analyser.connect(audioContext.destination);
 
 	loadAudioBuffer("demo.mp3");
 }
