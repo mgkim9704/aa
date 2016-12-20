@@ -105,10 +105,15 @@ function loadSampleAudio() {
 	biquad.type = "lowpass";
 	checkfilterload=true;
 	
+	mixfilter= audioContext.createBiquadFilter();
+	mixfilter.type = "peaking";
+	checkfilterload=true;
+	
 	marsterGain = audioContext.createGain();
 
 	// Connect audio processing graph
-	source1.connect(gainNode1);
+	source1.connect(mixfilter);
+	mixfilter.connect(gainNode1);
 	source2.connect(gainNode2);
 	
 	gainNode1.connect(marsterGain);
