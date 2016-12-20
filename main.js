@@ -43,6 +43,10 @@ nx.onload = function() {
 		source2.start(0.0);
 
 	});
+	
+	vinyl1.on('*',function(data) {
+		console.log(vinyl1.speed);
+	});
 
 }		   
 
