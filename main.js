@@ -90,13 +90,13 @@ function loadSampleAudio() {
 	$('#loading').text("loading...");
 
 	source1 = audioContext.createBufferSource();
-	gainNode1 = context.createGain();
+	gainNode1 = audioContext.createGain();
 	analyser1 = audioContext.createAnalyser();
 	analyser1.smoothingTimeConstant = 0.1;
 	analyser1.fftSize = 1024;
 	
 	source2 = audioContext.createBufferSource();
-	gainNode2 = context.createGain();
+	gainNode2 = audioContext.createGain();
 	analyser2 = audioContext.createAnalyser();
 	analyser2.smoothingTimeConstant = 0.1;
 	analyser2.fftSize = 1024;
@@ -105,7 +105,7 @@ function loadSampleAudio() {
 	biquad.type = "lowpass";
 	checkfilterload=true;
 	
-	marsterGain = context.createGain();
+	marsterGain = audioContext.createGain();
 
 	// Connect audio processing graph
 	source1.connect(gainNode1);
