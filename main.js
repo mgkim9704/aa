@@ -103,10 +103,15 @@ function loadSampleAudio() {
 	
 	biquad= audioContext.createBiquadFilter();
 	biquad.type = "lowpass";
+	biquad.Q.value=0;
+	biquad.frequency.value=21000;
 	checkfilterload=true;
 	
 	mixfilter= audioContext.createBiquadFilter();
 	mixfilter.type = "peaking";
+	mixfilter.Q.value=1;
+	mixfilter.frequency.value=250;
+	mixfilter.gain.value=0;
 	checkfilterload=true;
 	
 	marsterGain = audioContext.createGain();
@@ -353,6 +358,9 @@ function createAudio() {
 
 	biquad= audioContext.createBiquadFilter();
 	biquad.type = "lowpass";
+	biquad.Q.value=0;
+	biquad.frequency.value=21000;
+	
 	checkfilterload=true;
 	
 	source1.connect(biquad);
