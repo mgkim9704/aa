@@ -38,7 +38,7 @@ nx.onload = function() {
 		biquad.Q.value = 10*data.y;
 	});
 	
-	Next.on('press', function(data) {
+	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
 
 		index++;
@@ -95,7 +95,7 @@ function init() {
 function loadSampleAudio() {
 	$('#loading').text("loading...");
 
-	source = audioContext.createBufferSource();
+	source1 = audioContext.createBufferSource();
 	analyser = audioContext.createAnalyser();
 	analyser.smoothingTimeConstant = 0.1;
 	analyser.fftSize = 1024;
@@ -105,7 +105,7 @@ function loadSampleAudio() {
 	checkfilterload=true;
 
 	// Connect audio processing graph
-	source.connect(biquad);
+	source1.connect(biquad);
 	biquad.connect(audioContext.destination);
 	source.connect(analyser);
 
