@@ -43,6 +43,7 @@ nx.onload = function() {
 		gainNode1.gain.exponentialRampToValueAtTime(0,10);
 		source2.start(0.0);
 		gainNode2.gain.exponentialRampToValueAtTime(1,10);
+		console.log(audioContext.currentTime);
 		
 
 	});
