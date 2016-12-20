@@ -42,6 +42,17 @@ nx.onload = function() {
 	// some code using data.press, data.x, and data.y
 		if(data.press==1){
 			index++;
+			var reader = new FileReader();
+
+			reader.onload = function(fileEvent) {
+				var data = fileEvent.target.result;
+				initAudio(data);
+				};
+			if(index<=fileCount)
+				reader.readAsArrayBuffer(droppedFiles[index-1]);
+			else
+				consol.log("There are no file");
+
 		}
 	});
 
@@ -206,7 +217,7 @@ function onDocumentDragOver(evt) {
 }
 
 
-var droppedFiles, fileCount=0;
+var droppedFiles, fileCount=0; index=0;
 
 function onDocumentDrop(evt) {
 	evt.stopPropagation();
@@ -221,6 +232,7 @@ function onDocumentDrop(evt) {
 
 	droppedFiles.concat(evt.dataTransfer.files);
 	fileCount = droppedFiles.length;
+	index++;
 	
 	console.log(fileCount);
 
@@ -232,7 +244,7 @@ function onDocumentDrop(evt) {
 	};
 
 	if(fileCount==1)
-		reader.readAsArrayBuffer(droppedFiles[0]);
+		reader.readAsArrayBuffer(droppedFiles[index-1]);
 
 }
 
