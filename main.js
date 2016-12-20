@@ -10,6 +10,7 @@ var analyser;
 var xhr;
 var started = false;
 var checkfilterload = false;
+var index;
 
 $(document).ready(function() {
 
@@ -36,8 +37,15 @@ nx.onload = function() {
 		biquad.frequency.value=60+Math.pow(20000,data.x);
 		biquad.Q.value = 10*data.y;
 	});
+	
+	button1.on('*', function(data) {
+	// some code using data.press, data.x, and data.y
+		if(data.press==1){
+			index++;
+		}
+	});
 
-}
+}		   
 
 function init() {
 
@@ -187,6 +195,7 @@ $(window).mouseup(function(){
 	//camera.position.z -= delta * 50;
 //});
 
+
 function onDocumentDragOver(evt) {
 
 	$('#loading').show();
@@ -220,6 +229,48 @@ function onDocumentDrop(evt) {
 
 }
 
+//AllSongs = [];
+//current = -1;
+//function AddTracks(files) {
+	
+//	for (var i = 0; i < files.length; ++i) {
+//		var file = files[i];
+//		if (file.type.match(/audio.*/)) {
+//			AllSongs.push(file);
+//		}
+//	}
+//	if (current == -1) {
+//		LoadAudioFile(AllSongs.length - files.length);
+//	}
+//	
+//}
+
+//function LoadAudioFile(index) {
+	
+//	if (index < AllSongs.length) {
+//		var reader = new FileReader();
+//		reader.onload = function(d) {
+//		var e = document.getElementById("player");
+//		e.src = d.target.result;
+//		e.setAttribute("type", AllSongs[index].type);
+//		e.play();
+//		current = index;
+//	};
+//	reader.readAsDataURL(AllSongs[index]);
+//	} else {
+//		current = -1;
+//	}
+	
+//}
+
+//function OnLoad() {
+	
+//	var e = document.getElementById("player");
+//	e.addEventListener("ended", function() { LoadAudioFile(current + 1) }, false);
+	
+//}
+
+	
 function initAudio(data) {
 	source = audioContext.createBufferSource();
 
