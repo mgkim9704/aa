@@ -205,6 +205,9 @@ function onDocumentDragOver(evt) {
 	return false;
 }
 
+
+var droppedFiles, fileCount=0;
+
 function onDocumentDrop(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
@@ -216,8 +219,8 @@ function onDocumentDrop(evt) {
 	$('#loading').show();
 	$('#loading').text("loading...");
 
-	var droppedFiles = evt.dataTransfer.files;
-	var fileCount = droppedFiles.length;
+	droppedFiles.concat(evt.dataTransfer.files);
+	fileCount = droppedFiles.length;
 	
 	console.log(fileCount);
 
