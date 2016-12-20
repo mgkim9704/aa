@@ -217,6 +217,9 @@ function onDocumentDrop(evt) {
 	$('#loading').text("loading...");
 
 	var droppedFiles = evt.dataTransfer.files;
+	var fileCount = droppedFiles.length;
+	
+	console.log(fileCount);
 
 	var reader = new FileReader();
 
@@ -225,7 +228,8 @@ function onDocumentDrop(evt) {
 		initAudio(data);
 	};
 
-	reader.readAsArrayBuffer(droppedFiles[0]);
+	if(fileCount==1)
+		reader.readAsArrayBuffer(droppedFiles[0]);
 
 }
 
