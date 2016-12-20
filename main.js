@@ -179,7 +179,7 @@ function loadAudioBuffer(url1,url2) {
 	// request.send();
 }
 
-function finishLoad1(i) {
+function finishLoad(i) {
 	if(i==1){
 		source1.buffer = audioBuffer;
 		source1.loop = true;
