@@ -1,12 +1,11 @@
 var mouseX = 0, mouseY = 0, windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, camera, scene, renderer, material, container;
-var source;
 var analyser;
 var buffer;
 var audioBuffer;
 var dropArea;
 var audioContext;
-var source;
-var analyser;
+var source1, source2, gainNode1, gainNode2, marsterGain;
+var analyser1, analyser2;
 var xhr;
 var started = false;
 var checkfilterload = false;
@@ -41,6 +40,7 @@ nx.onload = function() {
 	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
 		console.log("click");
+		source2.start(0.0);
 
 	});
 
@@ -90,35 +90,51 @@ function loadSampleAudio() {
 	$('#loading').text("loading...");
 
 	source1 = audioContext.createBufferSource();
-	analyser = audioContext.createAnalyser();
-	analyser.smoothingTimeConstant = 0.1;
-	analyser.fftSize = 1024;
+	gainNode1 = context.createGain();
+	analyser1 = audioContext.createAnalyser();
+	analyser1.smoothingTimeConstant = 0.1;
+	analyser1.fftSize = 1024;
+	
+	source2 = audioContext.createBufferSource();
+	gainNode2 = context.createGain();
+	analyser2 = audioContext.createAnalyser();
+	analyser2.smoothingTimeConstant = 0.1;
+	analyser2.fftSize = 1024;
 	
 	biquad= audioContext.createBiquadFilter();
 	biquad.type = "lowpass";
 	checkfilterload=true;
+	
+	marsterGain = context.createGain();
 
 	// Connect audio processing graph
-	source1.connect(biquad);
+	source1.connect(gainNode1);
+	source2.connect(gainNode2);
+	
+	gainNode1.connect(marsterGain);
+	gainNode2.connect(marsterGain);
+	
+	marsterGain.connect(biquad);
 	biquad.connect(audioContext.destination);
-	source.connect(analyser);
+	
+	source1.connect(analyser1);
+	source2.connect(analyser2);
 
-	loadAudioBuffer("demo.mp3");
+	loadAudioBuffer("demo.mp3","Like The Sun.mp3");
 }
 
-function loadAudioBuffer(url) {
+function loadAudioBuffer(url1,url2) {
 
 	// Load asynchronously
 	var request = new XMLHttpRequest();
-	request.open("GET", url, true);
+	request.open("GET", url1, true);
 	request.responseType = "arraybuffer";
 
 	request.onload = function() {
 
-
 		audioContext.decodeAudioData(request.response, function(buffer) {
 			audioBuffer = buffer;
-			finishLoad();
+			finishLoad(1);
 		}, function(e) {
 			console.log(e);
 		});
@@ -126,6 +142,23 @@ function loadAudioBuffer(url) {
 
 	};
 	request.send();
+	
+	var request2 = new XMLHttpRequest();
+	request2.open("GET", url2, true);
+	request2.responseType = "arraybuffer";
+
+	request2.onload = function() {
+
+		audioContext.decodeAudioData(request.response, function(buffer) {
+			audioBuffer = buffer;
+			finishLoad(2);
+		}, function(e) {
+			console.log(e);
+		});
+
+
+	};
+	request2.send();
 
 
 	// Load asynchronously
@@ -141,11 +174,18 @@ function loadAudioBuffer(url) {
 	// request.send();
 }
 
-function finishLoad() {
-	source.buffer = audioBuffer;
-	source.loop = true;
-	source.start(0.0);
-	startViz();
+function finishLoad1(i) {
+	if(i==1){
+		source1.buffer = audioBuffer;
+		source1.loop = true;
+		source1.start(0.0);
+		startViz();
+	}
+	if(i==2){
+		source2.buffer = audioBuffer;
+		source2.loop = true;
+		startViz();
+	}
 }
 
 function onDocumentMouseMove(event) {
@@ -283,18 +323,18 @@ function onDocumentDrop(evt) {
 
 	
 function initAudio(data) {
-	source = audioContext.createBufferSource();
+	source1 = audioContext.createBufferSource();
 
 	if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
-			source.buffer = buffer;
+			source1.buffer = buffer;
 			createAudio();
 		}, function(e) {
 			console.log(e);
 			$('#loading').text("cannot decode mp3");
 		});
 	} else {
-		source.buffer = audioContext.createBuffer(data, false );
+		source1.buffer = audioContext.createBuffer(data, false );
 		createAudio();
 	}
 }
@@ -310,11 +350,11 @@ function createAudio() {
 	biquad.type = "lowpass";
 	checkfilterload=true;
 	
-	source.connect(biquad);
+	source1.connect(biquad);
 	biquad.connect(audioContext.destination);
-	source.connect(analyser);
-	source.start(0);
-	source.loop = true;
+	source1.connect(analyser);
+	source1.start(0);
+	source1.loop = true;
 
 	startViz();
 }
