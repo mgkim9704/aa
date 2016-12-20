@@ -40,7 +40,7 @@ nx.onload = function() {
 	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
 		console.log("click");
-		source2.start(0.0);
+		source2.start();
 		console.log(audioContext.currentTime);
 		
 
