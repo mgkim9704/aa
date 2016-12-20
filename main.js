@@ -38,7 +38,7 @@ nx.onload = function() {
 		biquad.Q.value = 10*data.y;
 	});
 	
-	button.on('*', function(data) {
+	Next.on('*', function(data) {
 	// some code using data.press, data.x, and data.y
 		if(data.press==1){
 			index++;
@@ -217,7 +217,7 @@ function onDocumentDragOver(evt) {
 }
 
 
-var droppedFiles, fileCount=0; index=0;
+var droppedFiles=[], fileCount=0; index=0;
 
 function onDocumentDrop(evt) {
 	evt.stopPropagation();
