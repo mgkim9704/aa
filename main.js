@@ -103,7 +103,6 @@ function loadSampleAudio() {
 	
 	source2 = audioContext.createBufferSource();
 	gainNode2 = audioContext.createGain();
-	gainNode2.gain.value=0;
 	analyser2 = audioContext.createAnalyser();
 	analyser2.smoothingTimeConstant = 0.1;
 	analyser2.fftSize = 1024;
