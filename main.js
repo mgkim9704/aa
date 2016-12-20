@@ -38,17 +38,16 @@ nx.onload = function() {
 		biquad.Q.value = 10*data.y;
 	});
 	
-	Next.on('*', function(data) {
+	Next.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
-		if(data.press==1){
-			index++;
 
-			if(index<=fileCount)
-				reader.readAsArrayBuffer(droppedFiles[index-1]);
-			else
-				consol.log("There are no file");
+		index++;
 
-		}
+		if(index<=fileCount)
+			reader.readAsArrayBuffer(droppedFiles[index-1]);
+		else
+			consol.log("There are no file");
+
 	});
 
 }		   
