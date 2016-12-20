@@ -163,7 +163,7 @@ function loadAudioBuffer(url1,url2) {
 
 	request2.onload = function() {
 
-		audioContext.decodeAudioData(request.response, function(buffer) {
+		audioContext.decodeAudioData(request2.response, function(buffer) {
 			audioBuffer = buffer;
 			finishLoad(2);
 		}, function(e) {
