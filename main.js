@@ -38,7 +38,7 @@ nx.onload = function() {
 		biquad.Q.value = 10*data.y;
 	});
 	
-	button1.on('*', function(data) {
+	button.on('*', function(data) {
 	// some code using data.press, data.x, and data.y
 		if(data.press==1){
 			index++;
