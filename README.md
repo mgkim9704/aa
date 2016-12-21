@@ -1,4 +1,4 @@
-# aaaa
+# Final project
 
 ![Music Synthesizer](./synthesizer.png)
 
@@ -15,3 +15,9 @@ We use two types of audio effect units, feedback delay and reverb, to enrich the
 
 ## Step #3
 Design your own synth sound by adjusting the parameters displayed on the GUI. Submit your code with the parameters. 
+
+
+## Run it!
+
+[https://mgkim9704.github.io/aaaa/](https://mgkim9704.github.io/aaaa/)
+
