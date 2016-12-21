@@ -47,14 +47,12 @@ nx.onload = function() {
 
   		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
-		gainNode2.gain.value=0.01;
   		gainNode2.gain.exponentialRampToValueAtTime(1, 15);
   		source1.stop(audioContext.currentTime+20);
   
 	});
  	
  	vinyl1.on('*',function(data) {
-		console.log(vinyl1.speed);
 		if(source1!=undefined){
  		source1.playbackRate=Math.pow(Math.E,2*vinyl1.speed-1);
 		}
