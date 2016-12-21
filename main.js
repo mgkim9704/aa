@@ -40,6 +40,8 @@ nx.onload = function() {
 	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
 		
+		if (!source) {
+		
 		console.log("click");
 		console.log(data.press);
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
@@ -47,6 +49,7 @@ nx.onload = function() {
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
 		source1.stop(audioContext.currentTime+10);
 
+		}
 	});
 	
 	vinyl1.on('*',function(data) {
