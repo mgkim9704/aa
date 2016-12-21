@@ -403,7 +403,6 @@ function createAudio(i) {
 		source1.connect(biquad);
 		biquad.connect(audioContext.destination);
 		source1.connect(analyser);
-		source1.start(0);
 		source1.loop = true;
 		
 		marsterGain = audioContext.createGain();
