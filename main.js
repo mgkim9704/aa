@@ -54,7 +54,7 @@ nx.onload = function() {
 	});
  	
  	vinyl1.on('*',function(data) {
-		console.log("vinyl1.speed");
+		console.log(vinyl1.speed);
 		if(source1!=undefined){
  		source1.playbackRate=Math.pow(Math.E,2*vinyl1.speed-1);
 		}
