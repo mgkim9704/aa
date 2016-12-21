@@ -42,8 +42,25 @@ nx.onload = function() {
 	
 		console.log("click");
 		console.log(gainNode1.gain.value);
+		
+		var request2 = new XMLHttpRequest();
+		request2.open("GET", url2, true);
+		request2.responseType = "arraybuffer";
+
+		request2.onload = function() {
+
+			audioContext.decodeAudioData(request2.response, function(buffer) {
+				audioBuffer = buffer;
+				finishLoad(2);
+			}, function(e) {
+				console.log(e);
+			});
+
+
+		};
+		request2.send();
+		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
-		source2.start(audioContext.currentTime);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
 		source1.stop(audioContext.currentTime+10);
 
@@ -106,6 +123,7 @@ function loadSampleAudio() {
 	
 	source2 = audioContext.createBufferSource();
 	gainNode2 = audioContext.createGain();
+	gainNode2.gain.value=0.01;
 	analyser2 = audioContext.createAnalyser();
 	analyser2.smoothingTimeConstant = 0.1;
 	analyser2.fftSize = 1024;
@@ -162,22 +180,7 @@ function loadAudioBuffer(url1,url2) {
 	};
 	request.send();
 	
-	var request2 = new XMLHttpRequest();
-	request2.open("GET", url2, true);
-	request2.responseType = "arraybuffer";
-
-	request2.onload = function() {
-
-		audioContext.decodeAudioData(request2.response, function(buffer) {
-			audioBuffer = buffer;
-			finishLoad(2);
-		}, function(e) {
-			console.log(e);
-		});
-
-
-	};
-	request2.send();
+	
 
 
 	// Load asynchronously
@@ -203,6 +206,7 @@ function finishLoad(i) {
 	if(i==2){
 		source2.buffer = audioBuffer;
 		source2.loop = true;
+		source2.start(0.0);
 		startViz();
 	}
 }
