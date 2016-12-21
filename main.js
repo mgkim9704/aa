@@ -344,6 +344,7 @@ function onDocumentDrop(evt) {
 function initAudio(data) {
 	if(source1==undefined){
 		source1 = audioContext.createBufferSource();
+		gainNode1 = audioContext.createGain();
 
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
@@ -381,7 +382,6 @@ function initAudio(data) {
 function createAudio(i) {
 
 	if(i==1){
-		gainNode1 = audioContext.createGain();
 		analyser1 = audioContext.createAnalyser();
 		analyser1.smoothingTimeConstant = 0.1;
 		analyser1.fftSize = 1024;
