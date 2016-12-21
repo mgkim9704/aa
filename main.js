@@ -35,7 +35,7 @@ nx.onload = function() {
 	gui_filter_freq.on('*',function(data) {
  		biquad.frequency.value=60+Math.pow(20000,data.x);
  		biquad.Q.value = 10*data.y;
-		marsterGain.gain.value=data.x+0.5
+		source1.playbackRate=data.x
 		
  	});
  	
