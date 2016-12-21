@@ -40,7 +40,7 @@ nx.onload = function() {
 	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
 		
-		if (!source) {
+		if (!source2) {
 		
 		console.log("click");
 		console.log(data.press);
