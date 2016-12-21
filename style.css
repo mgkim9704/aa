@@ -14,25 +14,17 @@ h1 {
 	width: 100%;
 }
 
-#Scratch {
-	width: 100%;
-	z-index: 100;
-}
 
 #Filter {
 	width: 100%;
 	z-index: 100;
 }
 
-#CrossFade {
+#Mix {
 	width: 100%;
 	z-index: 100;
 }
 
-#Next {
-	width: 100%;
-	z-index: 100;
-}
 
 #info {
 	position: absolute;
