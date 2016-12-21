@@ -35,7 +35,7 @@ nx.onload = function() {
 	gui_filter_freq.on('*',function(data) {
  		biquad.frequency.value=60+Math.pow(20000,data.x);
  		biquad.Q.value = 10*data.y;
-		source1.playbackRate=data.x+0.5
+
 		
  	});
  	
@@ -56,7 +56,7 @@ nx.onload = function() {
  	
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
- 		source1.playbackRate=Math.pow(Math.E,2*vinyl1.speed-1);
+ 		source1.playbackRate.value=Math.pow(Math.E,2*vinyl1.speed-1);
 		}
  	});
  
