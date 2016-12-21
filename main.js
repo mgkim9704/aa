@@ -41,7 +41,7 @@ nx.onload = function() {
 	// some code using data.press, data.x, and data.y
 	
 		console.log("click");
-		console.log(data.press);
+		console.log(gainNode1.gain.value);
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
 		source2.start(audioContext.currentTime);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
