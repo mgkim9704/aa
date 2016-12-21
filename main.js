@@ -43,9 +43,9 @@ nx.onload = function() {
 		console.log("click");
 		console.log(gainNode1.gain.value);
 		
-		loadAudioBuffer("demo.mp3",2);
+		source2.start();
 		
-		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
+		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
 		source1.stop(audioContext.currentTime+10);
 
@@ -129,9 +129,9 @@ function loadSampleAudio() {
 	marsterGain = audioContext.createGain();
 
 	// Connect audio processing graph
-	source1.connect(mixfilter);
+	//source1.connect(mixfilter);
 	mixfilter.connect(gainNode1);
-	source2.connect(gainNode2);
+	//source2.connect(gainNode2);
 	
 	gainNode1.connect(marsterGain);
 	gainNode2.connect(marsterGain);
@@ -142,7 +142,24 @@ function loadSampleAudio() {
 	source1.connect(analyser1);
 	source2.connect(analyser2);
 
-	loadAudioBuffer("Like The Sun.mp3",1);
+	//loadAudioBuffer("Like The Sun.mp3",1);
+	
+	bufferLoader = new BufferLoader(
+		audioContext,
+		["Like The Sun.mp3", "demo.mp3"],
+    		finishedLoading
+   		);
+
+	bufferLoader.load();
+	
+	
+}
+
+function finishedLoading(bufferList) {
+	source1.buffer = bufferList[0];
+	source2.buffer = bufferList[1];
+	source1.connect(mixfilter);
+	source1.start(0);
 }
 
 function loadAudioBuffer(url1,i) {
@@ -195,6 +212,56 @@ function finishLoad(i) {
 		startViz();
 	}
 }
+
+
+function BufferLoader(context, urlList, callback) {
+  this.context = context;
+  this.urlList = urlList;
+  this.onload = callback;
+  this.bufferList = new Array();
+  this.loadCount = 0;
+}
+
+BufferLoader.prototype.loadBuffer = function(url, index) {
+  // Load buffer asynchronously
+  var request = new XMLHttpRequest();
+  request.open("GET", url, true);
+  request.responseType = "arraybuffer";
+
+  var loader = this;
+
+  request.onload = function() {
+    // Asynchronously decode the audio file data in request.response
+    loader.context.decodeAudioData(
+      request.response,
+      function(buffer) {
+        if (!buffer) {
+          alert('error decoding file data: ' + url);
+          return;
+        }
+        loader.bufferList[index] = buffer;
+        if (++loader.loadCount == loader.urlList.length)
+          loader.onload(loader.bufferList);
+      },
+      function(error) {
+        console.error('decodeAudioData error', error);
+      }
+    );
+  }
+
+  request.onerror = function() {
+    alert('BufferLoader: XHR error');
+  }
+
+  request.send();
+}
+
+BufferLoader.prototype.load = function() {
+  for (var i = 0; i < this.urlList.length; ++i)
+  this.loadBuffer(this.urlList[i], i);
+}
+
+
 
 function onDocumentMouseMove(event) {
 	mouseX = (event.clientX - windowHalfX);
