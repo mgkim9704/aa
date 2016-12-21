@@ -279,7 +279,7 @@ function onDocumentDrop(evt) {
  	//fileCount = droppedFiles.length;
  	//index++;
  	
- 	console.log(fileCount);
+ 	//console.log(fileCount);
  
  	var reader = new FileReader();
  
