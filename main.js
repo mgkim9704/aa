@@ -39,11 +39,13 @@ nx.onload = function() {
 	
 	button1.on('press', function(data) {
 	// some code using data.press, data.x, and data.y
+		if(data.press==1){
 		console.log("click");
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
 		source2.start(audioContext.currentTime);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
 		source1.stop(audioContext.currentTime+10);
+		}
 				
 
 	});
