@@ -345,6 +345,7 @@ function initAudio(data) {
 	if(source1==undefined){
 		source1 = audioContext.createBufferSource();
 		gainNode1 = audioContext.createGain();
+		gainNode2 = audioContext.createGain();
 
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
@@ -424,7 +425,6 @@ function createAudio(i) {
 	}
 	
 	if(i==2){
-		gainNode2 = audioContext.createGain();
  		analyser2 = audioContext.createAnalyser();
  		analyser2.smoothingTimeConstant = 0.1;
  		analyser2.fftSize = 1024;
