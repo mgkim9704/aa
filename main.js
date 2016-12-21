@@ -350,7 +350,7 @@ function initAudio(data) {
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source1.buffer = buffer;
-				createAudio();
+				createAudio(1);
 			}, function(e) {
 				console.log(e);
 				$('#loading').text("cannot decode mp3");
@@ -367,7 +367,7 @@ function initAudio(data) {
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source2.buffer = buffer;
-				createAudio();
+				createAudio(2);
 			}, function(e) {
 				console.log(e);
 				$('#loading').text("cannot decode mp3");
