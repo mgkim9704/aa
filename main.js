@@ -46,14 +46,14 @@ nx.onload = function() {
  		loadAudioBuffer("Like The Sun.mp3",2);
 
   		
-		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
+		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
   		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
-  		source1.stop(audioContext.currentTime+10);
+  		source1.stop(audioContext.currentTime+20);
   
 	});
  	
  	vinyl1.on('*',function(data) {
- 		console.log(vinyl1.speed);
+ 		
  	});
  
 }		   
