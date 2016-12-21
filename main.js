@@ -48,7 +48,7 @@ nx.onload = function() {
   		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 		gainNode2.gain.value=0.01;
-  		gainNode2.gain.exponentialRampToValueAtTime(1, 20);
+  		gainNode2.gain.exponentialRampToValueAtTime(1, 15);
   		source1.stop(audioContext.currentTime+20);
   
 	});
