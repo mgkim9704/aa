@@ -41,9 +41,6 @@ nx.onload = function() {
  	
  	button1.on('press', function(data) {
  	// some code using data.press, data.x, and data.y
- 	
-  		console.log("click");
-  		console.log(gainNode1.gain.value);
   		
  		loadAudioBuffer("Like The Sun.mp3",2);
 
@@ -56,6 +53,7 @@ nx.onload = function() {
  	
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
+			console.log(vinyl1.speed);
  		source1.playbackRate.value=Math.pow(Math.E,2*vinyl1.speed-1);
 		}
  	});
