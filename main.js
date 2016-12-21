@@ -54,9 +54,10 @@ nx.onload = function() {
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
 			console.log(vinyl1.speed);
-			if(vinyl1.speed<0.04){
+			if(vinyl1.speed<0.04&&vinyl1.speed>0)
  				source1.playbackRate.value=100*vinyl1.speed;
-			}
+			else if(vinyl1.speed<0) 
+				source1.playbackRate.value=(-1)*vinyl1.speed<0;
 			else source1.playbackRate.value=1;
 		}
  	});
