@@ -35,6 +35,7 @@ nx.onload = function() {
 	gui_filter_freq.on('*',function(data) {
  		biquad.frequency.value=60+Math.pow(20000,data.x);
  		biquad.Q.value = 10*data.y;
+		console.log(data.x , data.y)
  	});
  	
  	button1.on('press', function(data) {
