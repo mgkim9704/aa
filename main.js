@@ -4,7 +4,7 @@ var buffer;
 var audioBuffer;
 var dropArea;
 var audioContext;
-var source1, source2, gainNode1, gainNode2, marsterGain;
+var source1=NULL, source2, gainNode1, gainNode2, marsterGain;
 var analyser1, analyser2;
 var xhr;
 var started = false;
@@ -54,7 +54,10 @@ nx.onload = function() {
 	});
  	
  	vinyl1.on('*',function(data) {
- 		source1.playbackRate=Math.pow(Math.E,vinyl1.speed-0.5);
+		console.log("vinyl1.speed");
+		if(source1!=NULL){
+ 		source1.playbackRate=Math.pow(Math.E,2*vinyl1.speed-1);
+		}
  	});
  
 }		   
