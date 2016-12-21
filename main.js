@@ -32,7 +32,6 @@ $(document).ready(function() {
  
 nx.onload = function() {
  
- 
 	gui_filter_freq.on('*',function(data) {
  		biquad.frequency.value=60+Math.pow(20000,data.x);
  		biquad.Q.value = 10*data.y;
@@ -48,11 +47,10 @@ nx.onload = function() {
 		if(!checkloadsampleAudio)
 			source2.start(0);
 
-  		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
   		//gainNode2.gain.exponentialRampToValueAtTime(1, 15);
   		source1.stop(audioContext.currentTime+20);
-  
+		  
 	});
  	
  	vinyl1.on('*',function(data) {
@@ -294,7 +292,7 @@ function onDocumentDrop(evt) {
  		initAudio(data);
  	};
  
- 	reader.readAsArrayBuffer(droppedFiles[0]);
+	reader.readAsArrayBuffer(droppedFiles[0]);
  	
  	//if(fileCount==1)
  	//	reader.readAsArrayBuffer(droppedFiles[index-1]);
@@ -376,6 +374,7 @@ function initAudio(data) {
 			source2.buffer = audioContext.createBuffer(data, false );
 			createAudio(2);
 		}
+	}
 }
 
 
@@ -438,8 +437,6 @@ function createAudio(i) {
 
 		startViz();
 	}
-	
-	
 	
 	
 	
