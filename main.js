@@ -54,7 +54,7 @@ nx.onload = function() {
 	});
  	
  	vinyl1.on('*',function(data) {
- 		source1.playbackRate=Math.pow(Math.E,vinyl1.speed);
+ 		source1.playbackRate=Math.pow(Math.E,vinyl1.speed-0.5);
  	});
  
 }		   
