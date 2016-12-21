@@ -43,9 +43,9 @@ nx.onload = function() {
 		console.log("click");
 		console.log(gainNode1.gain.value);
 		
-		loadAudioBuffer("Like The Sun.mp3",2);
+		loadAudioBuffer("demo.mp3",2);
 		
-		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
+		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
 		source1.stop(audioContext.currentTime+10);
 
@@ -142,7 +142,7 @@ function loadSampleAudio() {
 	source1.connect(analyser1);
 	source2.connect(analyser2);
 
-	loadAudioBuffer("demo.mp3",1);
+	loadAudioBuffer("Like The Sun.mp3",1);
 }
 
 function loadAudioBuffer(url1,i) {
