@@ -10,6 +10,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
+var checkloadsampleAudio = false;
  
 $(document).ready(function() {
  
@@ -42,11 +43,14 @@ nx.onload = function() {
  	button1.on('press', function(data) {
  	// some code using data.press, data.x, and data.y
   		
- 		loadAudioBuffer("Like The Sun.mp3",2);
+		if(checkloadsampleAudio)
+	 		loadAudioBuffer("Like The Sun.mp3",2);
+		if(!checkloadsampleAudio)
+			source2.start(0);
 
   		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
-  		gainNode2.gain.exponentialRampToValueAtTime(1, 15);
+  		//gainNode2.gain.exponentialRampToValueAtTime(1, 15);
   		source1.stop(audioContext.currentTime+20);
   
 	});
@@ -106,6 +110,8 @@ function init() {
  
 function loadSampleAudio() {
  	$('#loading').text("loading...");
+	
+	checkloadsampleAudio=true;
  
  	source1 = audioContext.createBufferSource();
  	gainNode1 = audioContext.createGain();
@@ -338,43 +344,105 @@ function onDocumentDrop(evt) {
 
 	
 function initAudio(data) {
-	source1 = audioContext.createBufferSource();
+	if(source1==undefined){
+		source1 = audioContext.createBufferSource();
 
-	if(audioContext.decodeAudioData) {
+		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
-			source1.buffer = buffer;
-			createAudio();
-		}, function(e) {
-			console.log(e);
-			$('#loading').text("cannot decode mp3");
-		});
-	} else {
-		source1.buffer = audioContext.createBuffer(data, false );
-		createAudio();
+				source1.buffer = buffer;
+				createAudio();
+			}, function(e) {
+				console.log(e);
+				$('#loading').text("cannot decode mp3");
+			});
+		} else {
+			source1.buffer = audioContext.createBuffer(data, false );
+			createAudio(1);
+		}
 	}
+	
+	else {
+		source2 = audioContext.createBufferSource();
+
+		if(audioContext.decodeAudioData) {
+		audioContext.decodeAudioData(data, function(buffer) {
+				source2.buffer = buffer;
+				createAudio();
+			}, function(e) {
+				console.log(e);
+				$('#loading').text("cannot decode mp3");
+			});
+		} else {
+			source2.buffer = audioContext.createBuffer(data, false );
+			createAudio(2);
+		}
 }
 
 
-function createAudio() {
+function createAudio(i) {
 
-	analyser = audioContext.createAnalyser();
-	analyser.smoothingTimeConstant = 0.1;
-	analyser.fftSize = 1024;
+	if(i==1){
+		gainNode1 = audioContext.createGain();
+		analyser1 = audioContext.createAnalyser();
+		analyser1.smoothingTimeConstant = 0.1;
+		analyser1.fftSize = 1024;
 
-	biquad= audioContext.createBiquadFilter();
-	biquad.type = "lowpass";
-	biquad.Q.value=0;
-	biquad.frequency.value=21000;
+		biquad= audioContext.createBiquadFilter();
+ 		biquad.type = "lowpass";
+ 		biquad.Q.value=0;
+ 		biquad.frequency.value=21000;
+ 		checkfilterload=true;
+		
+		mixfilter= audioContext.createBiquadFilter();
+ 		mixfilter.type = "peaking";
+ 		mixfilter.Q.value=1;
+ 		mixfilter.frequency.value=250;
+ 		mixfilter.gain.value=0;
+ 		checkfilterload=true;
+		
+		source1.connect(biquad);
+		biquad.connect(audioContext.destination);
+		source1.connect(analyser);
+		source1.start(0);
+		source1.loop = true;
+		
+		marsterGain = audioContext.createGain();
+		
+		// Connect audio processing graph
+		source1.connect(mixfilter);
+ 		mixfilter.connect(gainNode1);
+		gainNode1.connect(marsterGain);
+		
+		marsterGain.connect(biquad);
+		biquad.connect(audioContext.destination);
+		
+		source1.connect(analyser1);
+		
+		source1.start(0);
+		source1.loop = true;
+
+		startViz();
+	}
 	
-	checkfilterload=true;
-	
-	source1.connect(biquad);
-	biquad.connect(audioContext.destination);
-	source1.connect(analyser);
-	source1.start(0);
-	source1.loop = true;
+	if(i==2){
+		gainNode2 = audioContext.createGain();
+ 		analyser2 = audioContext.createAnalyser();
+ 		analyser2.smoothingTimeConstant = 0.1;
+ 		analyser2.fftSize = 1024;
 
-	startViz();
+		// Connect audio processing graph
+		source2.connect(gainNode2);
+		gainNode2.connect(marsterGain);
+		
+		source2.connect(analyser2);
+
+		startViz();
+	}
+	
+	
+	
+	
+	
 }
 
 function startViz(){
