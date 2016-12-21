@@ -43,22 +43,7 @@ nx.onload = function() {
 		console.log("click");
 		console.log(gainNode1.gain.value);
 		
-		var request2 = new XMLHttpRequest();
-		request2.open("GET", url2, true);
-		request2.responseType = "arraybuffer";
-
-		request2.onload = function() {
-
-			audioContext.decodeAudioData(request2.response, function(buffer) {
-				audioBuffer = buffer;
-				finishLoad(2);
-			}, function(e) {
-				console.log(e);
-			});
-
-
-		};
-		request2.send();
+		loadAudioBuffer("Like The Sun.mp3",2);
 		
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 10);
 		gainNode2.gain.exponentialRampToValueAtTime(1, 10);
@@ -157,10 +142,10 @@ function loadSampleAudio() {
 	source1.connect(analyser1);
 	source2.connect(analyser2);
 
-	loadAudioBuffer("demo.mp3","Like The Sun.mp3");
+	loadAudioBuffer("demo.mp3",1);
 }
 
-function loadAudioBuffer(url1,url2) {
+function loadAudioBuffer(url1,i) {
 
 	// Load asynchronously
 	var request = new XMLHttpRequest();
@@ -171,7 +156,7 @@ function loadAudioBuffer(url1,url2) {
 
 		audioContext.decodeAudioData(request.response, function(buffer) {
 			audioBuffer = buffer;
-			finishLoad(1);
+			finishLoad(i);
 		}, function(e) {
 			console.log(e);
 		});
