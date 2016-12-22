@@ -10,7 +10,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
-var checkloadsampleAudio = false, source1_is_null=true;
+var checkloadsampleAudio = false, source1_is_playing=false;
 var first=true;
  
 $(document).ready(function() {
@@ -52,17 +52,19 @@ nx.onload = function() {
 		
 		//using user file
 		if(!checkloadsampleAudio){
-			if(!source1_is_null){
+			if(source1_is_playing){
 				source2.start(0);
 				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 				source1.stop(audioContext.currentTime+20);
 				source1.buffer = null;
+				source1_is_playing=false;
 			}
-			if(source1_is_null){
+			if(!source1_is_playing){
 				source1.start(0);
 				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
 				source2.stop(audioContext.currentTime+20);
 				source2.buffer = null;
+				source1_is_playing=true;
 			}
 		}
 
@@ -366,9 +368,9 @@ function onDocumentDrop(evt) {
 
 	
 function initAudio(data) {
-	if(source1_is_null){
+	if(!source1_is_playing){
 		gainNode1.gain.value=1;
-		source1_is_null=false;
+
 		
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
@@ -385,7 +387,6 @@ function initAudio(data) {
 	}
 	
 	else {
-		source1_is_null=true;
 		gainNode2.gain.value=1;
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
@@ -408,7 +409,9 @@ function createAudio(i) {
 	if(i==1){
 		if(first){
 			source1.start(0);
+			source1_is_playing=true;
 			source1.loop = true;
+			first=false;
 		}
 
 		startViz();
