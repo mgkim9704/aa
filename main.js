@@ -103,15 +103,10 @@ function init() {
  
  	onWindowResize(null);
  	audioContext = new window.AudioContext();
- 
-}
- 
-function loadSampleAudio() {
- 	$('#loading').text("loading...");
 	
-	checkloadsampleAudio=true;
- 
- 	source1 = audioContext.createBufferSource();
+	
+	//make connection
+	source1 = audioContext.createBufferSource();
  	gainNode1 = audioContext.createGain();
  	analyser1 = audioContext.createAnalyser();
  	analyser1.smoothingTimeConstant = 0.1;
@@ -151,8 +146,16 @@ function loadSampleAudio() {
  	
   	source1.connect(analyser1);
   	source2.connect(analyser2);
-  
-	loadAudioBuffer("demo.mp3",1);
+	
+ 
+}
+ 
+function loadSampleAudio() {
+ 	$('#loading').text("loading...");
+	
+	checkloadsampleAudio=true;
+ 
+ 	loadAudioBuffer("demo.mp3",1);
 
 }
   
@@ -343,10 +346,7 @@ function onDocumentDrop(evt) {
 	
 function initAudio(data) {
 	if(source1==undefined){
-		source1 = audioContext.createBufferSource();
-		gainNode1 = audioContext.createGain();
-		gainNode2 = audioContext.createGain();
-
+		
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source1.buffer = buffer;
@@ -362,8 +362,6 @@ function initAudio(data) {
 	}
 	
 	else {
-		source2 = audioContext.createBufferSource();
-
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source2.buffer = buffer;
@@ -383,35 +381,6 @@ function initAudio(data) {
 function createAudio(i) {
 
 	if(i==1){
-		analyser1 = audioContext.createAnalyser();
-		analyser1.smoothingTimeConstant = 0.1;
-		analyser1.fftSize = 1024;
-
-		biquad= audioContext.createBiquadFilter();
- 		biquad.type = "lowpass";
- 		biquad.Q.value=0;
- 		biquad.frequency.value=21000;
- 		checkfilterload=true;
-		
-		mixfilter= audioContext.createBiquadFilter();
- 		mixfilter.type = "peaking";
- 		mixfilter.Q.value=1;
- 		mixfilter.frequency.value=250;
- 		mixfilter.gain.value=0;
- 		checkfilterload=true;
-		
-		marsterGain = audioContext.createGain();
-		
-		// Connect audio processing graph
-		source1.connect(mixfilter);
- 		mixfilter.connect(gainNode1);
-		gainNode1.connect(marsterGain);
-		
-		marsterGain.connect(biquad);
-		biquad.connect(audioContext.destination);
-		
-		source1.connect(analyser1);
-		
 		source1.start(0);
 		source1.loop = true;
 
@@ -419,17 +388,7 @@ function createAudio(i) {
 	}
 	
 	if(i==2){
- 		analyser2 = audioContext.createAnalyser();
- 		analyser2.smoothingTimeConstant = 0.1;
- 		analyser2.fftSize = 1024;
-
-		// Connect audio processing graph
-		source2.connect(gainNode2);
-		gainNode2.connect(marsterGain);
-		
-		source2.connect(analyser2);
-
-		startViz();
+ 		startViz();
 	}
 	
 	
