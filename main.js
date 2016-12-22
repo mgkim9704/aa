@@ -10,7 +10,7 @@ var checkloadsampleAudio = false, source1_is_playing=false, oneclick=false;
 var first=true;
 var delayEffect = null;
 var delayParams = {
-	delayTime : 6,
+	delayTime : 0.75,
 	feedbackGain : 0.7,
 	wetDry : 0
 }
