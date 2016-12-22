@@ -83,7 +83,7 @@ nx.onload = function() {
 		delayParams.wetDry=50;
 		wetGain.gain.value = delayParams.wetDry/100.0;
 		dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
-		source1.stop(audioContext.currentTime+20);
+		source1.stop(audioContext.currentTime);
 	});
  	
  	vinyl1.on('*',function(data) {
