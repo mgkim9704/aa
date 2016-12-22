@@ -1,17 +1,19 @@
 var mouseX = 0, mouseY = 0, windowHalfX = window.innerWidth / 2, windowHalfY = window.innerHeight / 2, camera, scene, renderer, material, container;
-var analyser;
-var buffer;
-var audioBuffer;
+var analyser, buffer, audioBuffer, audioContext;
 var dropArea;
-var audioContext;
-var source1, source2, gainNode1, gainNode2, marsterGain;
-var analyser1, analyser2;
+var source1, source2, gainNode1, gainNode2, marsterGain, analyser1, analyser2;;
 var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
 var checkloadsampleAudio = false, source1_is_playing=false;
 var first=true;
+var delayEffect = null;
+var delayParams = {
+	delayTime : 0.5,
+	feedbackGain : 0.5,
+	wetDry : 0
+}
  
 $(document).ready(function() {
  
@@ -45,9 +47,9 @@ nx.onload = function() {
   		
 		//using sample
 		if(checkloadsampleAudio){
-	 		loadAudioBuffer("Like The Sun.mp3",2);
 			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 			source1.stop(audioContext.currentTime+20);
+			loadAudioBuffer("Like The Sun.mp3",2);
 		}
 		
 		//using user file
@@ -73,8 +75,15 @@ nx.onload = function() {
   		
 		if(!checkloadsampleAudio)
 			source1_is_null=true;
-		  
+		  	
 	});
+	
+	button2.on('press', function(data) {
+		loadAudioBuffer("Like The Sun.mp3",2);
+		delayParams.wetDry=50;
+		wetGain.gain.value = delayParams.wetDry/100.0;
+		dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+		source1.stop(audioContext.currentTime+20);
  	
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
@@ -163,12 +172,31 @@ function init() {
  	mixfilter.frequency.value=250;
  	mixfilter.gain.value=0;
  	checkfilterload=true;
- 	
+	
+	delayLine = audioContext.createDelay();
+	delayLine.delayTime.value = delayParams.delayTime;
+	feedbackGain = audioContext.createGain();
+	feedbackGain.gain.value = delayParams.feedbackGain;
+	wetGain = audioContext.createGain();
+	wetGain.gain.value = delayParams.wetDry/100.0;
+ 	dryGain = audioContext.createGain();
+	dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+	
  	marsterGain = audioContext.createGain();
  
  	// Connect audio processing graph
- 	source1.connect(mixfilter);
+	
+	
+ 	source1.connect(delayLine);
+	delayLine.connect(feedbackGain);
+	feedbackGain.connect(wetGain)
+	feedbackGain.connect(delayLine);
+	
+	source1.connect(dryGain);
+	dryGain.connect(mixfilter);
  	mixfilter.connect(gainNode1);
+	wetGain.connect(gainNode1);
+	
  	source2.connect(gainNode2);
  	
  	gainNode1.connect(marsterGain);
@@ -447,3 +475,4 @@ function startViz(){
 	//}
 
 }
+
