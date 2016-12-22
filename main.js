@@ -113,8 +113,10 @@ nx.onload = function() {
 			}
 			
 			oneclick=false;
-				
-		}	
+
+			}
+		}
+	
 	});
  	
  	vinyl1.on('*',function(data) {
