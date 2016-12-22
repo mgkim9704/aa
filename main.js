@@ -6,7 +6,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
-var checkloadsampleAudio = false, source1_is_playing=false, oneclick=true;
+var checkloadsampleAudio = false, source1_is_playing=false, oneclick=true, change=false;
 var first=true;
 var delayEffect = null;
 var delayParams = {
@@ -48,6 +48,8 @@ nx.onload = function() {
 		if(oneclick){
 		//using sample
 		if(checkloadsampleAudio){
+			change=true;
+			mixfilter.gain.value=linearRampToValueAtTime(-8, 20);
 			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 			source1.stop(audioContext.currentTime+20);
 			loadAudioBuffer("Like The Sun.mp3",2);
@@ -56,6 +58,7 @@ nx.onload = function() {
 		//using user file
 		if(!checkloadsampleAudio){
 			if(source1_is_playing){
+				change=true;
 				source2.start(0);
 				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 				source1.stop(audioContext.currentTime+20);
@@ -63,6 +66,7 @@ nx.onload = function() {
 				source1_is_playing=false;
 			}
 			if(!source1_is_playing){
+				change=true;
 				source1.start(0);
 				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
 				source2.stop(audioContext.currentTime+20);
@@ -98,7 +102,6 @@ nx.onload = function() {
 				wetGain.gain.value = delayParams.wetDry/100.0;
 				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
 				source2.start(0);
-				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 				source1.stop(audioContext.currentTime);
 				source1.buffer = null;
 				source1_is_playing=false;
@@ -108,7 +111,6 @@ nx.onload = function() {
 				wetGain.gain.value = delayParams.wetDry/100.0;
 				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
 				source1.start(0);
-				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
 				source2.stop(audioContext.currentTime);
 				source2.buffer = null;
 				source1_is_playing=true;
@@ -123,6 +125,11 @@ nx.onload = function() {
  	
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
+			if(change==true){
+				mixfilter.gain.value=mixfilter.gain.value-0.5;
+				if(mixfilter.gain.value==-30)
+					change=false;
+			}
 			console.log(gainNode1.gain.value, gainNode2.gain.value);
 			if(source1_is_playing){
 			if(vinyl1.speed<0.04&&vinyl1.speed>0)
