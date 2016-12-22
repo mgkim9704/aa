@@ -42,14 +42,32 @@ nx.onload = function() {
  	button1.on('press', function(data) {
  	// some code using data.press, data.x, and data.y
   		
-		if(checkloadsampleAudio)
+		//using sample
+		if(checkloadsampleAudio){
 	 		loadAudioBuffer("Like The Sun.mp3",2);
-		if(!checkloadsampleAudio)
-			source2.start(0);
+			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
+			source1.stop(audioContext.currentTime+20);
+		}
+		
+		//using user file
+		if(!checkloadsampleAudio){
+			if(!source1_is_null){
+				source2.start(0);
+				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
+				source1.stop(audioContext.currentTime+20);
+				source1_is_null=true;
+			}
+			if(source1_is_null){
+				source1.start(0);
+				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
+				source2.stop(audioContext.currentTime+20);
+				source1_is_null=false;
+			}
+		}
 
-		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
+		
   		//gainNode2.gain.exponentialRampToValueAtTime(1, 15);
-  		source1.stop(audioContext.currentTime+20);
+  		
 		if(!checkloadsampleAudio)
 			source1_is_null=true;
 		  
