@@ -94,6 +94,7 @@ nx.onload = function() {
 			
 			if(!checkloadsampleAudio){
 			if(source1_is_playing){
+				delayParams.wetDry=50;
 				wetGain.gain.value = delayParams.wetDry/100.0;
 				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
 				source2.start(0);
@@ -103,6 +104,7 @@ nx.onload = function() {
 				source1_is_playing=false;
 			}
 			if(!source1_is_playing){
+				delayParams.wetDry=50;
 				wetGain.gain.value = delayParams.wetDry/100.0;
 				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
 				source1.start(0);
