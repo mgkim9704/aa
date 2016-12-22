@@ -10,7 +10,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
-var checkloadsampleAudio = false;
+var checkloadsampleAudio = false, source1_is_null=true;
  
 $(document).ready(function() {
  
@@ -50,6 +50,8 @@ nx.onload = function() {
 		gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
   		//gainNode2.gain.exponentialRampToValueAtTime(1, 15);
   		source1.stop(audioContext.currentTime+20);
+		if(!checkloadsampleAudio)
+			source1_is_null=true;
 		  
 	});
  	
@@ -345,7 +347,7 @@ function onDocumentDrop(evt) {
 
 	
 function initAudio(data) {
-	if(source1==undefined){
+	if(source1_is_null){
 		
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
