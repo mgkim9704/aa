@@ -84,12 +84,34 @@ nx.onload = function() {
 	
 	button2.on('press', function(data) {
 		if(oneclick){
-		loadAudioBuffer("Like The Sun.mp3",2);
-		delayParams.wetDry=50;
-		wetGain.gain.value = delayParams.wetDry/100.0;
-		dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
-		source1.stop(audioContext.currentTime);
-		oneclick=false;
+			if(checkloadsampleAudio){
+			loadAudioBuffer("Like The Sun.mp3",2);
+			delayParams.wetDry=50;
+			wetGain.gain.value = delayParams.wetDry/100.0;
+			dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+			source1.stop(audioContext.currentTime);
+			}
+			
+			if(!checkloadsampleAudio){
+			if(source1_is_playing){
+				wetGain.gain.value = delayParams.wetDry/100.0;
+				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+				source2.start(0);
+				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
+				source1.stop(audioContext.currentTime);
+				source1.buffer = null;
+				source1_is_playing=false;
+			}
+			if(!source1_is_playing){
+				wetGain.gain.value = delayParams.wetDry/100.0;
+				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+				source1.start(0);
+				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
+				source2.stop(audioContext.currentTime);
+				source2.buffer = null;
+				source1_is_playing=true;
+			
+			oneclick=false;
 		}
 	});
  	
