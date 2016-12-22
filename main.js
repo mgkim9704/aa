@@ -88,11 +88,11 @@ nx.onload = function() {
 	button2.on('press', function(data) {
 		if(oneclick){
 			if(checkloadsampleAudio){
-			loadAudioBuffer("Like The Sun.mp3",2);
-			delayParams.wetDry=50;
-			wetGain.gain.value = delayParams.wetDry/100.0;
-			dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
-			source1.stop(audioContext.currentTime);
+				loadAudioBuffer("Like The Sun.mp3",2);
+				delayParams.wetDry=50;
+				wetGain.gain.value = delayParams.wetDry/100.0;
+				dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
+				source1.stop(audioContext.currentTime);
 			}
 			
 			if(!checkloadsampleAudio){
@@ -129,22 +129,24 @@ nx.onload = function() {
 				if(mixfilter.gain.value==-30)
 					change=false;
 			}
+			
 			console.log(gainNode1.gain.value, gainNode2.gain.value);
 			console.log(vinyl1.speed, source1_is_playing);
+			
 			if(source1_is_playing){
-			if(vinyl1.speed<0.04&&vinyl1.speed>0)
- 				source1.playbackRate.value=100*vinyl1.speed;
-			else if(vinyl1.speed<0) 
-				source1.playbackRate.value=(-1)*vinyl1.speed<0;
-			else source1.playbackRate.value=1;
+				if(vinyl1.speed<0.04&&vinyl1.speed>0)
+ 					source1.playbackRate.value=100*vinyl1.speed;
+				else if(vinyl1.speed<0) 
+					source1.playbackRate.value=(-1)*vinyl1.speed<0;
+				else source1.playbackRate.value=1;
 			}
 			
 			if(!source1_is_playing){
-			if(vinyl1.speed<0.04&&vinyl1.speed>0)
- 				source2.playbackRate.value=100*vinyl1.speed;
-			else if(vinyl1.speed<0) 
-				source2.playbackRate.value=(-1)*vinyl1.speed<0;
-			else source2.playbackRate.value=1;
+				if(vinyl1.speed<0.04&&vinyl1.speed>0)
+ 					source2.playbackRate.value=100*vinyl1.speed;
+				else if(vinyl1.speed<0) 
+					source2.playbackRate.value=(-1)*vinyl1.speed<0;
+				else source2.playbackRate.value=1;
 			}
 		}
  	});
@@ -303,6 +305,7 @@ function finishLoad(i) {
  	if(i==1){
  		source1.buffer = audioBuffer;
  		source1.loop = true;
+		source1_is_playing=true;
  		source1.start(0.0);
  		startViz();
  	}
