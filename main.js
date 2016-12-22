@@ -349,6 +349,8 @@ function onDocumentDrop(evt) {
 function initAudio(data) {
 	if(source1_is_null){
 		
+		source1_is_null=false;
+		
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source1.buffer = buffer;
