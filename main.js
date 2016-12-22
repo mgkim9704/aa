@@ -6,7 +6,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
-var checkloadsampleAudio = false, source1_is_playing=false;
+var checkloadsampleAudio = false, source1_is_playing=false, oneclick=false;
 var first=true;
 var delayEffect = null;
 var delayParams = {
@@ -45,6 +45,7 @@ nx.onload = function() {
  	button1.on('press', function(data) {
  	// some code using data.press, data.x, and data.y
   		
+		if(oneclick){
 		//using sample
 		if(checkloadsampleAudio){
 			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
@@ -75,15 +76,21 @@ nx.onload = function() {
   		
 		if(!checkloadsampleAudio)
 			source1_is_null=true;
+			
+		oneclick=false
+		}
 		  	
 	});
 	
 	button2.on('press', function(data) {
+		if(oneclick){
 		loadAudioBuffer("Like The Sun.mp3",2);
 		delayParams.wetDry=50;
 		wetGain.gain.value = delayParams.wetDry/100.0;
 		dryGain.gain.value = (100.0-delayParams.wetDry)/100.0;
 		source1.stop(audioContext.currentTime);
+		oneclick=false;
+		}
 	});
  	
  	vinyl1.on('*',function(data) {
