@@ -400,11 +400,6 @@ function createAudio(i) {
  		mixfilter.gain.value=0;
  		checkfilterload=true;
 		
-		source1.connect(biquad);
-		biquad.connect(audioContext.destination);
-		source1.connect(analyser);
-		source1.loop = true;
-		
 		marsterGain = audioContext.createGain();
 		
 		// Connect audio processing graph
