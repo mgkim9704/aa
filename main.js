@@ -79,11 +79,21 @@ nx.onload = function() {
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
 			console.log(gainNode1.gain.value, gainNode2.gain.value);
+			if(source1_is_playing){
 			if(vinyl1.speed<0.04&&vinyl1.speed>0)
  				source1.playbackRate.value=100*vinyl1.speed;
 			else if(vinyl1.speed<0) 
 				source1.playbackRate.value=(-1)*vinyl1.speed<0;
 			else source1.playbackRate.value=1;
+			}
+			
+			if(!source1_is_playing){
+			if(vinyl1.speed<0.04&&vinyl1.speed>0)
+ 				source2.playbackRate.value=100*vinyl1.speed;
+			else if(vinyl1.speed<0) 
+				source2.playbackRate.value=(-1)*vinyl1.speed<0;
+			else source2.playbackRate.value=1;
+			}
 		}
  	});
  
