@@ -49,7 +49,6 @@ nx.onload = function() {
 		//using sample
 		if(checkloadsampleAudio){
 			change=true;
-			mixfilter.gain.value=linearRampToValueAtTime(-8, 20);
 			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 			source1.stop(audioContext.currentTime+20);
 			loadAudioBuffer("Like The Sun.mp3",2);
