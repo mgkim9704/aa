@@ -17,16 +17,16 @@ h1 {
 
 #Filter {
 	width: 100%;
-	top:50px;
+	top:100px;
 	position: absolute;
-	z-index: 100;
+	
 }
 
 #Mix {
 	width: 100%;
-	top:5000px;
+	top:600px;
 	position: absolute;
-	z-index: 100;
+	
 }
 
 
