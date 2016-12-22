@@ -6,7 +6,7 @@ var xhr;
 var started = false;
 var checkfilterload = false;
 var index;
-var checkloadsampleAudio = false, source1_is_playing=false, oneclick=false;
+var checkloadsampleAudio = false, source1_is_playing=false, oneclick=true;
 var first=true;
 var delayEffect = null;
 var delayParams = {
