@@ -11,7 +11,7 @@ var started = false;
 var checkfilterload = false;
 var index;
 var checkloadsampleAudio = false, source1_is_null=true;
-var init=true;
+var first=true;
  
 $(document).ready(function() {
  
@@ -407,7 +407,7 @@ function initAudio(data) {
 function createAudio(i) {
 
 	if(i==1){
-		if(init){
+		if(first){
 			source1.start(0);
 			source1.loop = true;
 		}
