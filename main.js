@@ -57,14 +57,12 @@ nx.onload = function() {
 				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 				source1.stop(audioContext.currentTime+20);
 				source1.buffer = null;
-				source1_is_null=true;
 			}
 			if(source1_is_null){
 				source1.start(0);
 				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
 				source2.stop(audioContext.currentTime+20);
 				source2.buffer = null;
-				source1_is_null=false;
 			}
 		}
 
@@ -387,6 +385,7 @@ function initAudio(data) {
 	}
 	
 	else {
+		source1_is_null=true;
 		gainNode2.gain.value=1;
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
