@@ -110,9 +110,11 @@ nx.onload = function() {
 				source2.stop(audioContext.currentTime);
 				source2.buffer = null;
 				source1_is_playing=true;
+			}
 			
 			oneclick=false;
-		}
+				
+		}	
 	});
  	
  	vinyl1.on('*',function(data) {
