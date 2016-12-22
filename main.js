@@ -50,7 +50,7 @@ nx.onload = function() {
 		if(checkloadsampleAudio){
 			change=true;
 			gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
-			source1.stop(audioContext.currentTime+20);
+			source1.stop(audioContext.currentTime+10);
 			loadAudioBuffer("Like The Sun.mp3",2);
 		}
 		
@@ -60,7 +60,7 @@ nx.onload = function() {
 				change=true;
 				source2.start(0);
 				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
-				source1.stop(audioContext.currentTime+20);
+				source1.stop(audioContext.currentTime+10);
 				source1.buffer = null;
 				source1_is_playing=false;
 			}
@@ -68,7 +68,7 @@ nx.onload = function() {
 				change=true;
 				source1.start(0);
 				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
-				source2.stop(audioContext.currentTime+20);
+				source2.stop(audioContext.currentTime+10);
 				source2.buffer = null;
 				source1_is_playing=true;
 			}
