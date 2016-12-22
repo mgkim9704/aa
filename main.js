@@ -130,7 +130,7 @@ nx.onload = function() {
 					change=false;
 			}
 			console.log(gainNode1.gain.value, gainNode2.gain.value);
-			console.log(vinyl1.speed);
+			console.log(vinyl1.speed, source1_is_playing);
 			if(source1_is_playing){
 			if(vinyl1.speed<0.04&&vinyl1.speed>0)
  				source1.playbackRate.value=100*vinyl1.speed;
