@@ -125,7 +125,7 @@ nx.onload = function() {
  	vinyl1.on('*',function(data) {
 		if(source1!=undefined){
 			if(change==true){
-				mixfilter.gain.value=mixfilter.gain.value-0.5;
+				mixfilter.gain.value=mixfilter.gain.value-0.02;
 				if(mixfilter.gain.value==-30)
 					change=false;
 			}
