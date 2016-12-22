@@ -9,6 +9,7 @@ body {
 h1 {
 	font-size:32px;
 	top:10px;
+	position: absolute;
 	color:#666;
 	width: 100%;
 }
@@ -16,11 +17,15 @@ h1 {
 
 #Filter {
 	width: 100%;
+	top:50px;
+	position: absolute;
 	z-index: 100;
 }
 
 #Mix {
 	width: 100%;
+	top:5000px;
+	position: absolute;
 	z-index: 100;
 }
 
