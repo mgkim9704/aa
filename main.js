@@ -11,6 +11,7 @@ var started = false;
 var checkfilterload = false;
 var index;
 var checkloadsampleAudio = false, source1_is_null=true;
+var init=true;
  
 $(document).ready(function() {
  
@@ -55,12 +56,14 @@ nx.onload = function() {
 				source2.start(0);
 				gainNode1.gain.exponentialRampToValueAtTime(0.01, 20);
 				source1.stop(audioContext.currentTime+20);
+				source1.buffer = null;
 				source1_is_null=true;
 			}
 			if(source1_is_null){
 				source1.start(0);
 				gainNode2.gain.exponentialRampToValueAtTime(0.01, 20);
 				source2.stop(audioContext.currentTime+20);
+				source2.buffer = null;
 				source1_is_null=false;
 			}
 		}
@@ -366,7 +369,7 @@ function onDocumentDrop(evt) {
 	
 function initAudio(data) {
 	if(source1_is_null){
-		
+		gainNode1.gain.value=1;
 		source1_is_null=false;
 		
 		if(audioContext.decodeAudioData) {
@@ -384,6 +387,7 @@ function initAudio(data) {
 	}
 	
 	else {
+		gainNode2.gain.value=1;
 		if(audioContext.decodeAudioData) {
 		audioContext.decodeAudioData(data, function(buffer) {
 				source2.buffer = buffer;
@@ -403,8 +407,10 @@ function initAudio(data) {
 function createAudio(i) {
 
 	if(i==1){
-		source1.start(0);
-		source1.loop = true;
+		if(init){
+			source1.start(0);
+			source1.loop = true;
+		}
 
 		startViz();
 	}
