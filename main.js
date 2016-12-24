@@ -129,10 +129,7 @@ nx.onload = function() {
 				if(mixfilter.gain.value==-30)
 					change=false;
 			}
-			
-			console.log(gainNode1.gain.value, gainNode2.gain.value);
-			console.log(vinyl1.speed, source1_is_playing);
-			
+						
 			if(source1_is_playing){
 				if(vinyl1.speed<0.04&&vinyl1.speed>0)
  					source1.playbackRate.value=100*vinyl1.speed;
@@ -155,31 +152,7 @@ nx.onload = function() {
  
 function init() {
  
-	//init 3D scene
- 	//container = document.createElement('div');
- 	//document.body.appendChild(container);
- 	//camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000000);
- 	//camera.position.z = 2000;
- 	//scene = new THREE.Scene();
- 	//scene.add(camera);
- 	//renderer = new THREE.WebGLRenderer({
- 	//	antialias : false,
- 	//	sortObjects : false
- 	//});
- 	//renderer.setSize(window.innerWidth, window.innerHeight);
- 
- 	//container.appendChild(renderer.domElement);
- 
- 	// stop the user getting a text cursor
- 	//document.onselectStart = function() {
- 	//	return false;
- 	//};
- 
- 	//add stats
- 	//stats = new Stats();
- 	//stats.domElement.style.position = 'absolute';
- 	//stats.domElement.style.top = '0px';
- 	//container.appendChild(stats.domElement);
+
  
  	//init listeners
  	$("#loadSample").click( loadSampleAudio);
@@ -287,19 +260,7 @@ function loadAudioBuffer(url1,i) {
  	
  	
  
- 
- 	// Load asynchronously
- 	// var request = new XMLHttpRequest();
- 	// request.open("GET", url, true);
- 	// request.responseType = "arraybuffer";
- 
- 	// request.onload = function() {
- 	// 	audioBuffer = audioContext.createBuffer(request.response, false );
- 	// 	finishLoad();
- 	// };
- 
- 	// request.send();
-}
+ }
  
 function finishLoad(i) {
  	if(i==1){
@@ -332,21 +293,9 @@ function onWindowResize(event) {
  
 function animate() {
  	requestAnimationFrame(animate);
- 	//render();
- 	//stats.update();
-}
+ }
  
-//function render() {
- 	//LoopVisualizer.update();
- 
- 	//var xrot = mouseX/window.innerWidth * Math.PI*2 + Math.PI;
- 	//var yrot = mouseY/window.innerHeight* Math.PI*2 + Math.PI;
- 
- 	//LoopVisualizer.loopHolder.rotation.x += (-yrot - LoopVisualizer.loopHolder.rotation.x) * 0.3;
- 	//LoopVisualizer.loopHolder.rotation.y += (xrot - LoopVisualizer.loopHolder.rotation.y) * 0.3;
- 
- 	//renderer.render(scene, camera);
-//}
+
  
 //filter reset
 $(window).mouseup(function(){
@@ -358,10 +307,7 @@ $(window).mouseup(function(){
  	
 });
  
-//$(window).mousewheel(function(event, delta) {
- 	//set camera Z
- 	//camera.position.z -= delta * 50;
-//});
+
  
  
 function onDocumentDragOver(evt) {
@@ -373,27 +319,16 @@ function onDocumentDragOver(evt) {
  	return false;
 }
  
- 
-//var droppedFiles=[], fileCount=0; index=0;
-//var reader = new FileReader();
- 
+  
 function onDocumentDrop(evt) {
  	evt.stopPropagation();
  	evt.preventDefault();
- 
- 	//clean up previous mp3
- 	//if (source) source.disconnect();
- 	//LoopVisualizer.remove();
+
  
  	$('#loading').show();
  	$('#loading').text("loading...");
  
  	var droppedFiles=evt.dataTransfer.files;
- 	//droppedFiles.concat(evt.dataTransfer.files);
- 	//fileCount = droppedFiles.length;
- 	//index++;
- 	
- 	//console.log(fileCount);
  
  	var reader = new FileReader();
  
@@ -404,52 +339,8 @@ function onDocumentDrop(evt) {
  
 	reader.readAsArrayBuffer(droppedFiles[0]);
  	
- 	//if(fileCount==1)
- 	//	reader.readAsArrayBuffer(droppedFiles[index-1]);
- 
 }
  
-//AllSongs = [];
-//current = -1;
-//function AddTracks(files) {
-	
-//	for (var i = 0; i < files.length; ++i) {
-//		var file = files[i];
-//		if (file.type.match(/audio.*/)) {
-//			AllSongs.push(file);
-//		}
-//	}
-//	if (current == -1) {
-//		LoadAudioFile(AllSongs.length - files.length);
-//	}
-//	
-//}
- 
-//function LoadAudioFile(index) {
- 	
-//	if (index < AllSongs.length) {
-//		var reader = new FileReader();
-//		reader.onload = function(d) {
-//		var e = document.getElementById("player");
-//		e.src = d.target.result;
-//		e.setAttribute("type", AllSongs[index].type);
-//		e.play();
-//		current = index;
-//	};
-//	reader.readAsDataURL(AllSongs[index]);
-//	} else {
-//		current = -1;
-//	}
-	
-//}
-
-//function OnLoad() {
-	
-//	var e = document.getElementById("player");
-//	e.addEventListener("ended", function() { LoadAudioFile(current + 1) }, false);
-	
-//}
-
 	
 function initAudio(data) {
 	if(!source1_is_playing){
@@ -512,13 +403,5 @@ function createAudio(i) {
 function startViz(){
 
 	$('#loading').hide();
-
-	//LoopVisualizer.init();
-
-	//if (!started){
-		//started = true;
-		//animate();
-	//}
-
 }
 
